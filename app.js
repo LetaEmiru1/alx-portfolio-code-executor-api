@@ -4,6 +4,7 @@ const connectDB = require('./src/config/db');
 
 // --- Route Files ---
 const authRoutes = require('./src/routes/auth');
+const testRoutes = require('./src/routes/test'); // <-- NEW LINE
 
 // Load env vars
 dotenv.config();
@@ -17,9 +18,8 @@ const app = express();
 app.use(express.json());
 
 // --- Mount Routers ---
-// This tells the app that for any URL starting with /api/auth,
-// the request should be handled by our authRoutes file.
 app.use('/api/auth', authRoutes);
+app.use('/api/test', testRoutes); // <-- NEW LINE
 
 // A simple test route for the root URL
 app.get('/', (req, res) => {
