@@ -4,7 +4,8 @@ const connectDB = require('./src/config/db');
 
 // --- Route Files ---
 const authRoutes = require('./src/routes/auth');
-const testRoutes = require('./src/routes/test'); // <-- NEW LINE
+const snippetRoutes = require('./src/routes/snippets');
+const executionRoutes = require('./src/routes/execution'); // <-- NEW LINE
 
 // Load env vars
 dotenv.config();
@@ -19,9 +20,9 @@ app.use(express.json());
 
 // --- Mount Routers ---
 app.use('/api/auth', authRoutes);
-app.use('/api/test', testRoutes); // <-- NEW LINE
+app.use('/api/snippets', snippetRoutes);
+app.use('/api/execute', executionRoutes); // <-- NEW LINE
 
-// A simple test route for the root URL
 app.get('/', (req, res) => {
   res.send('API is running successfully...');
 });

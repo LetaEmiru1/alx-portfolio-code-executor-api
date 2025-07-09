@@ -1,0 +1,14 @@
+# Ignore node_modules, as they will be installed inside the container.
+node_modules
+npm-debug.log
+
+# Ignore environment files. We will set these on the deployment server.
+.env
+
+# Ignore Git directory.
+.git
+.gitignore
+
+# Ignore Docker files.
+Dockerfile
+.dockerignore
