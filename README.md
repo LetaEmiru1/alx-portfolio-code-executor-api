@@ -51,7 +51,6 @@ Comprehensive documentation for all API endpoints, including examples, is availa
 
 **[View API Documentation](https://documenter.getpostman.com/view/46595562/2sB34eJhdH)**
 ---
-
 ## Getting Started (Running Locally)
 
 To get a local copy up and running, follow these simple steps.
