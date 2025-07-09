@@ -4,6 +4,14 @@ const path = require('path');
 const crypto = require('crypto');
 
 const executeCode = (req, res) => {
+  // Check for our new environment variable "feature flag"
+  if (process.env.DOCKER_ENABLED !== 'true') {
+    return res.status(200).json({
+      output: 'Code execution is disabled in this live environment for security and resource reasons.\nThis feature is fully functional in the local development environment.'
+    });
+  }
+
+  // The rest of your existing code...
   const { language, code } = req.body;
 
   if (!code) {
@@ -27,7 +35,6 @@ const executeCode = (req, res) => {
 
   const { extension, image } = languageConfig[language];
   const uniqueId = crypto.randomBytes(8).toString('hex');
-  // We will use the system's default temp directory for better compatibility
   const tempDir = path.join(require('os').tmpdir(), 'alx-code-executor');
   const filepath = path.join(tempDir, `${uniqueId}.${extension}`);
 
@@ -39,13 +46,9 @@ const executeCode = (req, res) => {
 
   const command = `docker run --rm --memory="256m" --cpus="0.5" -v "${tempDir}":/app ${image} ${language === 'javascript' ? 'node' : language} /app/${uniqueId}.${extension}`;
 
-  // --- DEBUGGING ---
-  // Log the exact command we are about to run.
   console.log('EXECUTING COMMAND:', command);
 
   exec(command, (error, stdout, stderr) => {
-    // --- ROBUST CLEANUP ---
-    // Always try to clean up the file, but don't let it crash the app.
     try {
       fs.unlinkSync(filepath);
     } catch (cleanupError) {
